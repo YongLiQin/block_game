@@ -1,0 +1,13 @@
+var btnLeft = document.getElementById("btnLeft");
+var btnRight = document.getElementById("btnRight");
+var btn_begin = document.getElementById('btn_begin');
+var btn_rebegin = document.getElementById('btn_rebegin');
+var btn_change = document.getElementById('btn_change');
+var speed = 50, w = 0, i = 0, socre = 0;
+var sum = 0, number = -1, width = 3, height = 3;
+var color, target_num, timer, time = 300, lineHeight = 11;
+btn_begin.onclick = Begin;
+btn_rebegin.onclick = reBegin;
+btnLeft.onclick = btn_l;
+btnRight.onclick = btn_r;
+btn_change.onclick = Change;
