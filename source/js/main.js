@@ -6,6 +6,8 @@ var btn_change = document.getElementById('btn_change');
 var speed = 50, w = 0, i = 0, socre = 0;
 var sum = 0, number = -1, width = 3, height = 3;
 var color, target_num, timer, time = 300, lineHeight = 11;
+var scoreGET = 0;
+document.getElementById('con_score').innerHTML =  '总分:' + scoreGET;
 btn_begin.onclick = Begin;
 btn_rebegin.onclick = reBegin;
 btnLeft.onclick = btn_l;

@@ -5,18 +5,9 @@ function Begin () {
 };
 function reBegin () {
 	btnContions(false, true, true, true, true);
-	var domCount = document.getElementsByClassName('box');
-	for(var j = 0; j < domCount.length; i++)
-	{
-		domCount[j].remove();
-	}
-	for(var x = 0; x < 12; x++)
-	{
-		for(var y = 0; y < 11; y++)
-		{
-			myarr[x][y] = 0;
-		}
-	}
+	var container = document.getElementById('container');
+	container.innerHTML = '';
+	clearInterval(timer);
 };
 function btn_l () {
 	justify(-speed, -1);

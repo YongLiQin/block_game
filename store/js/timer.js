@@ -12,6 +12,7 @@ function handle () {
 					if(myarr[box.offsetTop / 50 + 1][box.offsetLeft / 50])
 					{
 						w == 6? w = 0: w++;
+						end ();
 						blchange ();
 						createBlock ();
 						return 0;
@@ -20,6 +21,7 @@ function handle () {
 				else
 				{
 					w == 6? w = 0: w++;
+					end ();
 					blchange ();
 					createBlock ();
 					return 0;

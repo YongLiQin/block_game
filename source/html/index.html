@@ -5,12 +5,36 @@
 	<title>俄罗斯方块</title>
 	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+		body{
+			background-color: #1CED48;
+		}
+		.score{
+			height: 50px;
+			text-align: center;
+			background-color: #FB05ED;
+			font-size: 2.5em;
+			line-height: 50px;
+			color: #110B96;
+			font-weight: 800;
+		}
+		.con_score{
+			height: 70px;
+			background-color: #F35904;
+			width: 260px;
+			color: #FEFCFC;
+			font-size: 2.5em;
+			font-weight: 600;
+		}
+	</style>
 </head>
 <body>
+	<div class="score">欢迎来到俄罗斯方块世界</div>
 	<div class="outContainer">
 		<div class="container_wc" id="container">
 		</div>
 		<div class="btnGroup">
+			<div class="con_score" id="con_score"></div>
 			<div class="btn_1">
 				<button id="btn_begin" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pause favicon"></span></button>
 				<button id="btn_rebegin" disabled type="button" class="btn btn-default"><span class="glyphicon glyphicon-stop favicon"></span></button>

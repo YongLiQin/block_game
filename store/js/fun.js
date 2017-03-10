@@ -18,7 +18,7 @@ function Block (t ,colorR) {
 			if(digit[t][x][y])
 			{
 				var Odiv = document.createElement("div");
-				Odiv.className = 'box' + x + y;
+				Odiv.className = 'box box' + x + y;
 				Odiv.id = 'target' + t + x + y;
 				Odiv.style.backgroundColor = colorR;
 				var Ocontainer = document.getElementById("container");
@@ -115,6 +115,10 @@ function rotate (t) {
 	switch (t) {
 		case 1:
 			var {lx, ty} = source (1);
+			if(rotateJust(4, {lx, ty}))
+			{
+				break;
+			}
 			remove (1);
 			Block (4, color);
 			moveTop (4, {lx, ty});
@@ -122,6 +126,10 @@ function rotate (t) {
 		break;
 		case 4:
 			var {lx, ty} = source (4);
+			if(rotateJust(7, {lx, ty}))
+			{
+				break;
+			}
 			remove (4);
 			Block (7, color);
 			moveTop (7, {lx, ty});
@@ -129,6 +137,10 @@ function rotate (t) {
 		break;
 		case 7:
 			var {lx, ty} = source (7);
+			if(rotateJust(9, {lx, ty}))
+			{
+				break;
+			}
 			remove (7);
 			Block (9, color);
 			moveTop (9, {lx, ty});
@@ -136,6 +148,10 @@ function rotate (t) {
 		break;
 		case 9:
 			var {lx, ty} = source (9);
+			if(rotateJust(1, {lx, ty}))
+			{
+				break;
+			}
 			remove (9);
 			Block (1, color);
 			moveTop (1, {lx, ty});
@@ -143,6 +159,10 @@ function rotate (t) {
 		break;
 		case 10:
 			var {lx, ty} = source (10);
+			if(rotateJust(12, {lx, ty}))
+			{
+				break;
+			}
 			remove (10);
 			Block (12, color);
 			moveTop (12, {lx, ty});
@@ -150,13 +170,21 @@ function rotate (t) {
 		break;
 		case 12:
 			var {lx, ty} = source (12);
+			if(rotateJust(15, {lx, ty}))
+			{
+				break;
+			}
 			remove (12);
 			Block (15, color);
 			moveTop (15, {lx, ty});
-			target_num = 12;
+			target_num = 15;
 		break;
 		case 15:
 			var {lx, ty} = source (15);
+			if(rotateJust(18, {lx, ty}))
+			{
+				break;
+			}
 			remove (15);
 			Block (18, color);
 			moveTop (18, {lx, ty});
@@ -164,6 +192,10 @@ function rotate (t) {
 		break;
 		case 18:
 			var {lx, ty} = source (18);
+			if(rotateJust(10, {lx, ty}))
+			{
+				break;
+			}
 			remove (18);
 			Block (10, color);
 			moveTop (10, {lx, ty});
@@ -171,6 +203,10 @@ function rotate (t) {
 		break;
 		case 2:
 			var {lx, ty} = source (2);
+			if(rotateJust(5, {lx, ty}))
+			{
+				break;
+			}
 			remove (2);
 			Block (5, color);
 			moveTop (5, {lx, ty});
@@ -178,6 +214,10 @@ function rotate (t) {
 		break;
 		case 5:
 			var {lx, ty} = source (5);
+			if(rotateJust(13, {lx, ty}))
+			{
+				break;
+			}
 			remove (5);
 			Block (13, color);
 			moveTop (13, {lx, ty});
@@ -185,6 +225,10 @@ function rotate (t) {
 		break;
 		case 13:
 			var {lx, ty} = source (13);
+			if(rotateJust(17, {lx, ty}))
+			{
+				break;
+			}
 			remove (13);
 			Block (17, color);
 			moveTop (17, {lx, ty});
@@ -192,6 +236,10 @@ function rotate (t) {
 		break;
 		case 17:
 			var {lx, ty} = source (17);
+			if(rotateJust(2, {lx, ty}))
+			{
+				break;
+			}
 			remove (17);
 			Block (2, color);
 			moveTop (2, {lx, ty});
@@ -237,7 +285,7 @@ function justify (speed_, dir) {
 		}
 	}
 };
-function blchange (x = 1) {
+function blchange () {
 	for(let x = 0; x < height; x++)
 	{
 		for(let y = 0; y < width; y++)
@@ -245,7 +293,7 @@ function blchange (x = 1) {
 			if(digit[target_num][x][y])
 			{
 				var box = document.getElementById("target" + target_num + x + y);
-				myarr[box.offsetTop / 50][box.offsetLeft / 50] = x;
+				myarr[box.offsetTop / 50][box.offsetLeft / 50] = 1;
 				box.id = `line${box.offsetTop / 50}`;
 				box.setAttribute('name', `line${box.offsetTop / 50}`);
 				box.setAttribute('data_x', box.offsetLeft / 50);
@@ -264,6 +312,8 @@ function score () {
 		var count = document.getElementsByName(`line${x}`);
 		if(count.length == 11)
 		{
+			scoreGET += 10;
+			document.getElementById('con_score').innerHTML =  '总分:' + scoreGET;
 			console.log(count.length);
 			for(let y = count.length; y > 0; y--)
 			{
@@ -313,5 +363,35 @@ function moveAgain (x) {
 			var ty = count[r].offsetTop / 50;
 			lineHeight = lineHeight > ty ? ty : lineHeight;	
 		}
+	}
+};
+
+function rotateJust (t, {ty, lx}) {
+	var n = ty / 50;
+	var m = lx / 50;
+	for(let x = 0; x < height; x++)
+	{
+		for(let y = 0; y < width; y++)
+		{
+			if(digit[t][x][y])
+			{
+				if(myarr[x + n][m + y])
+				{
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
+};
+
+function end () {
+	if(lineHeight == 1)
+	{
+		var speed = 50, w = 0, i = 0, socre = 0;
+		var sum = 0, number = -1, width = 3, height = 3;
+		var color, target_num, timer, time = 300, lineHeight = 11;
+		var scoreGET = 0;
+		clearInterval(timer);
 	}
 };
