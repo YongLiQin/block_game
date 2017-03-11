@@ -8,6 +8,7 @@ function reBegin () {
 	var container = document.getElementById('container');
 	container.innerHTML = '';
 	clearInterval(timer);
+	varreset ();
 };
 function btn_l () {
 	justify(-speed, -1);

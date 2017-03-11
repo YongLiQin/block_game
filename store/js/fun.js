@@ -5,10 +5,12 @@ function btnContions (...bl) {
 	btn_change.disabled = bl[3];
 	btn_rebegin.disabled = bl[4];
 };
+
 function create(colorR) {
  	number == 19 ? number = 0 : number++;
  	Block (number, colorR);
 };
+
 function Block (t ,colorR) {
 	target_num = t;
 	for(let x = 0; x < height; x++ )
@@ -18,7 +20,7 @@ function Block (t ,colorR) {
 			if(digit[t][x][y])
 			{
 				var Odiv = document.createElement("div");
-				Odiv.className = 'box box' + x + y;
+				Odiv.className = 'box' + x + y;
 				Odiv.id = 'target' + t + x + y;
 				Odiv.style.backgroundColor = colorR;
 				var Ocontainer = document.getElementById("container");
@@ -27,6 +29,7 @@ function Block (t ,colorR) {
 		}
 	}
 };
+
 function createBlock () {
 	switch (w) {
 		case 0:
@@ -59,6 +62,7 @@ function createBlock () {
 			break;
 	};
 };
+
 function remove (t) {
 	for(let x = 0; x < height; x++)
 	{
@@ -71,8 +75,9 @@ function remove (t) {
 		}
 	} 
 };
+
 function source (t) {
-	var ty, lx, i = 1;
+	var ty, lx, n = 1;
 	for(let x = 0; x < height; x++)
 	{
 		for(let y = 0; y < width; y++)
@@ -80,16 +85,16 @@ function source (t) {
 			if(digit[t][x][y])
 			{
 				var box = document.getElementById("target" + t + x + y);
-				if(i)
+				if(n)
 				{
 					ty = box.offsetTop;
 					lx = box.offsetLeft;
-					i = 0;
+					n = 0;
 				}
 				else 
 				{
-					ty = ty < box.offsetTop? ty : box.offsetTop;
-					lx = lx < box.offsetLeft? lx : box.offsetLeft;
+					ty = ty < box.offsetTop ? ty : box.offsetTop;
+					lx = lx < box.offsetLeft ? lx : box.offsetLeft;
 				}
 				
 			}
@@ -97,10 +102,11 @@ function source (t) {
 	}
 	return {lx, ty};
 };
+
 function moveTop (t, {lx, ty}) {
-	for(let x = 0; x < 3; x++)
+	for(let x = 0; x < height; x++)
 	{
-		for(let y = 0; y < 3; y++)
+		for(let y = 0; y < width; y++)
 		{
 			if(digit[t][x][y])
 			{
@@ -111,6 +117,7 @@ function moveTop (t, {lx, ty}) {
 		}
 	}
 };
+
 function rotate (t) {
 	switch (t) {
 		case 1:
@@ -248,6 +255,7 @@ function rotate (t) {
 	};
 
 };
+
 function justify (speed_, dir) {
 	for(let x = height - 1; x >= 0; x--)
 	{
@@ -260,15 +268,14 @@ function justify (speed_, dir) {
 				{
 					return 0;
 				}
-				if(!(box.offsetLeft > 0 && box.offsetLeft < 500))
+				if(!(box.offsetLeft > 0 && box.offsetLeft < (w_num - 1) * 50))
 				{
-					if(box.offsetLeft == 500 && (dir < 0));
+					if(box.offsetLeft == (w_num - 1) * 50 && (dir < 0));
 					else if (box.offsetLeft == 0 && (dir > 0));
 					else
 					{
 						return 0;
-					}
-					
+					}	
 				}
 			}
 		}
@@ -285,6 +292,7 @@ function justify (speed_, dir) {
 		}
 	}
 };
+
 function blchange () {
 	for(let x = 0; x < height; x++)
 	{
@@ -295,11 +303,21 @@ function blchange () {
 				var box = document.getElementById("target" + target_num + x + y);
 				myarr[box.offsetTop / 50][box.offsetLeft / 50] = 1;
 				box.id = `line${box.offsetTop / 50}`;
+				box.className += ` line${box.offsetTop / 50}`;
 				box.setAttribute('name', `line${box.offsetTop / 50}`);
-				box.setAttribute('data_x', box.offsetLeft / 50);
-				box.setAttribute('data_y', box.offsetTop / 50);
-				var ty = box.offsetTop / 50;
-				lineHeight = lineHeight > ty ? ty : lineHeight;
+				box.setAttribute('data_x', `${box.offsetLeft / 50}`);
+				box.setAttribute('data_y', `${box.offsetTop / 50}`);
+				if(i)
+				{
+					lineHeight = box.offsetTop / 50;
+					i = 0;
+				}
+				else 
+				{
+				 	var ty = box.offsetTop / 50;
+				 	lineHeight = lineHeight > ty ? ty : lineHeight;
+				} 
+				
 			}
 		}
 	}
@@ -307,21 +325,23 @@ function blchange () {
 };
 
 function score () {
-	for(let x = 11; x >= lineHeight; x--)
+	for(let x = h_num - 1; x >= lineHeight; x--)
 	{
 		var count = document.getElementsByName(`line${x}`);
 		if(count.length == 11)
 		{
 			scoreGET += 10;
 			document.getElementById('con_score').innerHTML =  '总分:' + scoreGET;
-			console.log(count.length);
-			for(let y = count.length; y > 0; y--)
-			{
-				var a = document.getElementById(`line${x}`);
-				var t = a.getAttribute('data_y');
-				var b = a.getAttribute('data_x');
-				myarr[t][b] = 0;
-				a.remove();
+			for(;;)
+			{	if(!document.getElementsByName(`line${x}`).length) break;
+				for(let y = 0; y < count.length; y++)
+				{
+					var a = document.getElementById(`line${x}`);
+					var t = count[y].getAttribute('data_y');
+					var b = count[y].getAttribute('data_x');
+					myarr[t][b] = 0;
+					count[y].remove();
+				}
 			}
 			moveAgain (x);
 		}
@@ -329,39 +349,22 @@ function score () {
 };
 
 function moveAgain (x) {
-
-	for(let y = lineHeight; y < x; y++)
+	for(let y = x - 1; y >= lineHeight; y--)
 	{
-		var count = document.getElementsByName(`line${y}`);
-		for(let r = count.length - 1; r >= 0; r--)
+		var count = document.getElementsByClassName(`line${y}`);
+		for(let r = 0; r < count.length; r++)
 		{
 			var t = count[r].getAttribute('data_y');
 			var b = count[r].getAttribute('data_x');
 			myarr[t][b] = 0;
 			myarr[t - 0 + 1][b] = 1;
-			count[r].style.top = count[r].offsetTop + 50 + 'px';			
-		}
-	}
-
-	for(let y = lineHeight; y < x; y++)
-	{
-		var count = document.getElementsByName(`line${y}`);
-		for(let r = count.length - 1; r >= 0; r--)
-		{
+			count[r].style.top = count[r].offsetTop + 50 + 'px';
 			count[r].id = `line${count[r].offsetTop / 50}`;
-			count[r].setAttribute('name', `line${count[r].offsetTop / 50}`);			
-		}
-	}
-
-	for(let y = lineHeight; y < x; y++)
-	{
-		var count = document.getElementsByName(`line${y}`);
-		for(let r = count.length - 1; r >= 0; r--)
-		{
-			count[r].setAttribute('data_x', count[r].offsetLeft / 50);
-			count[r].setAttribute('data_y', count[r].offsetTop / 50);
+			count[r].setAttribute('name', `line${count[r].offsetTop / 50}`);
+			count[r].setAttribute('data_x', `${count[r].offsetLeft / 50}`);
+			count[r].setAttribute('data_y', `${count[r].offsetTop / 50}`);
 			var ty = count[r].offsetTop / 50;
-			lineHeight = lineHeight > ty ? ty : lineHeight;	
+			lineHeight = lineHeight > ty ? ty : lineHeight;			
 		}
 	}
 };
@@ -386,12 +389,15 @@ function rotateJust (t, {ty, lx}) {
 };
 
 function end () {
-	if(lineHeight == 1)
+	if(lineHeight == 0)
 	{
-		var speed = 50, w = 0, i = 0, socre = 0;
-		var sum = 0, number = -1, width = 3, height = 3;
-		var color, target_num, timer, time = 300, lineHeight = 11;
-		var scoreGET = 0;
 		clearInterval(timer);
+		varreset ();
 	}
+};
+
+function varreset () {
+	var speed = 50, w = 0, number = 0, width = 3, height = 3,
+	time = 500, scoreGET = 0, h_num = 12, w_num = 11;
+	var color, lineHeight, target_num, timer, i = 1;
 };

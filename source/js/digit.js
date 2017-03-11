@@ -105,11 +105,12 @@ digit =
             ]
             //19
         ];
+
 var myarr = new Array();
-for(let x = 0; x < 12; x++)
+for(let x = 0; x < h_num; x++)
 {
     myarr[x] = new Array(); 
-    for(let y = 0; y < 11; y++)
+    for(let y = 0; y < w_num; y++)
     {   
         myarr[x][y] = 0;
     }

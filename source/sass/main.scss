@@ -2,6 +2,28 @@
 	padding: 0px;
 	margin: 0px;
 }
+body{
+	background-color: #1CED48!important;
+}
+.score{
+	height: 50px;
+	text-align: center;
+	background-color: #FB05ED;
+	font-size: 2.5em;
+	line-height: 50px;
+	color: #110B96;
+	font-weight: 800;
+}
+.con_score{
+	height: 70px;
+	line-height: 70px;
+	text-align: center;
+	background-color: #F35904;
+	width: 260px;
+	color: #FEFCFC;
+	font-size: 2.5em;
+	font-weight: 600;
+}
 .outContainer{
 	margin: 0 auto;
 	width: 870px;
@@ -11,7 +33,7 @@
 	width: 610px;
 	float: left;
 	height: 660px;
-	background-color: #FEECEC;
+	background-color: white;
 	border: 30px solid green;
 	border-radius: 30px;
 	position: relative;
@@ -98,5 +120,5 @@
 	left: 300px;
 }
 .favicon{
-	font-size: 3em;
+	font-size: 1.8em;
 }
